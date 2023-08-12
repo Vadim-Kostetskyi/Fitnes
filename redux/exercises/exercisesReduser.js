@@ -12,6 +12,14 @@ export const exercisesSlice = createSlice({
   name: "exercise",
   initialState,
   reducers: {
+    setApproach: (state, { payload }) => (
+      console.log(111),
+      console.log(payload),
+      {
+        ...state,
+        // payload,
+      }
+    ),
     // updateUserProfile: (state, { payload }) => ({
     //   ...state,
     //   userId: payload.userId,

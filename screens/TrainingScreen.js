@@ -1,6 +1,6 @@
 import { View, ImageBackground } from "react-native";
 
-import Button from "../components/button";
+import Button from "../components/Button";
 import { styles } from "../styles";
 
 const TrainingScreen = () => {

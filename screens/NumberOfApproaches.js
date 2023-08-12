@@ -1,15 +1,20 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
 
 import { styles } from "../styles";
+import ApproachButton from "../components/ApproachesButton";
+import setApproach from "../redux/exercises/exercisesReduser";
 
 const NumberOfApproachesScreen = () => {
   const [quantity, setQuantity] = useState([0, 0, 0]);
-
   const [approach, setApproach] = useState(0);
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const {
     params: { exercise },
@@ -28,6 +33,37 @@ const NumberOfApproachesScreen = () => {
     setApproach(number);
   };
 
+  // const numberOfApproach = () => {
+  //   dispatch(
+  //     setApproach({
+  //       dfgdfgdfg: 123,
+  //     })
+  //   );
+  //   console.log(123);
+  //   navigation.navigate(-1);
+  // };
+
+  const numberOfApproach = () => {
+    console.log(1111111111111111);
+    return async (dispatch) => {
+      console.log(2222);
+      try {
+        await dispatch(
+          setApproach({
+            dfgdfgdfg: 123,
+          })
+        );
+
+        console.log(123);
+
+        // Тепер ми чекаємо завершення дії setApproach перед викликом navigation.navigate
+        navigation.navigate(-1);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  };
+
   return (
     <View style={{ paddingTop: 100 }}>
       <View style={[styles.exerciseName, styles.center]}>
@@ -42,24 +78,9 @@ const NumberOfApproachesScreen = () => {
           styles.center,
         ]}
       >
-        <TouchableOpacity
-          style={[styles.approach, styles.center]}
-          onPress={() => changeApproach(0)}
-        >
-          <Text style={{ textAlign: "center" }}>1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.approach, styles.center]}
-          onPress={() => changeApproach(1)}
-        >
-          <Text style={{ textAlign: "center" }}>2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.approach, styles.center]}
-          onPress={() => changeApproach(2)}
-        >
-          <Text style={{ textAlign: "center" }}>3</Text>
-        </TouchableOpacity>
+        <ApproachButton func={() => changeApproach(0)} text={"1"} />
+        <ApproachButton func={() => changeApproach(1)} text={"2"} />
+        <ApproachButton func={() => changeApproach(2)} text={"3"} />
       </View>
       {/* <View style={[styles.exerciseName, styles.center]}> */}
       <Text style={{ textAlign: "center", paddingBottom: 25 }}>
@@ -96,38 +117,24 @@ const NumberOfApproachesScreen = () => {
         </TouchableOpacity>
       </View>
       <View style={{ flexDirection: "row", marginBottom: 15 }}>
-        <TouchableOpacity
-          style={[styles.approach, styles.center]}
-          onPress={() => add(-10)}
-          disabled={quantity[approach] < 10}
-        >
-          <Text style={{ textAlign: "center" }}>-10</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.approach, styles.center]}
-          onPress={() => add(10)}
-        >
-          <Text style={{ textAlign: "center" }}>+10</Text>
-        </TouchableOpacity>
+        <ApproachButton
+          func={() => add(-10)}
+          text={"-10"}
+          disable={quantity[approach] < 10}
+        />
+        <ApproachButton func={() => add(10)} text={"+10"} />
       </View>
       <View style={{ flexDirection: "row", marginBottom: 15 }}>
-        <TouchableOpacity
-          style={[styles.approach, styles.center]}
-          onPress={() => add(-50)}
-          disabled={quantity[approach] < 50}
-        >
-          <Text style={{ textAlign: "center" }}>-50</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.approach, styles.center]}
-          onPress={() => add(50)}
-        >
-          <Text style={{ textAlign: "center" }}>+50</Text>
-        </TouchableOpacity>
+        <ApproachButton
+          func={() => add(-50)}
+          text={"-50"}
+          disable={quantity[approach] < 50}
+        />
+        <ApproachButton func={() => add(50)} text={"+50"} />
       </View>
       <TouchableOpacity
         style={[styles.center]}
-        // onPress={() => add(50)}
+        onPress={() => console.log(123132)}
       >
         <Ionicons name="checkmark-circle-outline" size={38} color="black" />
       </TouchableOpacity>

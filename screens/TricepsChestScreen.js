@@ -1,8 +1,8 @@
 import { View, ImageBackground } from "react-native";
 import { useState } from "react";
 
-import Button from "../components/button";
-import Exercises from "../components/exercises";
+import Button from "../components/Button";
+import Exercises from "../components/Exercises";
 import { styles } from "../styles";
 
 const TricepsChestScreen = () => {
