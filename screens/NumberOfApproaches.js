@@ -132,10 +132,7 @@ const NumberOfApproachesScreen = () => {
         />
         <ApproachButton func={() => add(50)} text={"+50"} />
       </View>
-      <TouchableOpacity
-        style={[styles.center]}
-        onPress={() => console.log(123132)}
-      >
+      <TouchableOpacity style={[styles.center]} onPress={numberOfApproach}>
         <Ionicons name="checkmark-circle-outline" size={38} color="black" />
       </TouchableOpacity>
     </View>
