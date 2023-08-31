@@ -1,29 +1,48 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { styles } from "../styles";
 import ApproachButton from "../components/ApproachesButton";
-import setApproach from "../redux/exercises/exercisesReduser";
+import { setNumberOfApproaches } from "../redux/exercises/exercisesOperations";
 
 const NumberOfApproachesScreen = () => {
-  const [quantity, setQuantity] = useState([0, 0, 0]);
-  const [approach, setApproach] = useState(0);
-
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-
   const {
     params: { exercise },
   } = useRoute();
 
+  const oldExercise = useSelector((state) => state.exercises.exercises);
+  console.log("ex", oldExercise[exercise]);
+
+  const [quantity, setQuantity] = useState(oldExercise[exercise] || [0, 0, 0]);
+  const [exercisesCompleted, setExercisesCompleted] = useState(-1);
+  const [exerciseCompleted, setExerciseCompleted] = useState(0);
+  const [askWindow, setAskWindow] = useState(false);
+  const [approach, setApproach] = useState(0);
+
+  useEffect(() => {
+    const indexWithZero = quantity.findIndex((el) => el === 0);
+    console.log("indexWithZero", indexWithZero);
+    if (indexWithZero === 1) {
+      setExerciseCompleted(1);
+    } else if (indexWithZero === 2) {
+      setExerciseCompleted(2);
+    } else if (indexWithZero < 0) {
+      setExerciseCompleted(3);
+    }
+    setExercisesCompleted(indexWithZero);
+  }, []);
+  console.log("exercisesCompleted", exerciseCompleted);
+
+  console.log("quantity", quantity);
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const add = (number) => {
-    console.log(number);
-    // setQuantity((prev) => prev[0] + number);
-    // console.log(quantity[0] + 1);
     setQuantity((prev) =>
       prev.map((value, index) => (index === approach ? value + number : value))
     );
@@ -33,35 +52,26 @@ const NumberOfApproachesScreen = () => {
     setApproach(number);
   };
 
-  // const numberOfApproach = () => {
-  //   dispatch(
-  //     setApproach({
-  //       dfgdfgdfg: 123,
-  //     })
-  //   );
-  //   console.log(123);
-  //   navigation.navigate(-1);
-  // };
+  const numberOfApproach = async () => {
+    try {
+      await dispatch(
+        setNumberOfApproaches({
+          exercise,
+          quantity,
+        })
+      );
 
-  const numberOfApproach = () => {
-    console.log(1111111111111111);
-    return async (dispatch) => {
-      console.log(2222);
-      try {
-        await dispatch(
-          setApproach({
-            dfgdfgdfg: 123,
-          })
-        );
+      // Тепер ми чекаємо завершення дії setApproach перед викликом navigation.navigate
+      // navigation.navigate(-1);
+    } catch (error) {
+      console.log(22222);
+      console.error(error);
+    }
+  };
 
-        console.log(123);
-
-        // Тепер ми чекаємо завершення дії setApproach перед викликом navigation.navigate
-        navigation.navigate(-1);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const onFocusButton = () => {
+    console.log(11111);
+    setAskWindow(true);
   };
 
   return (
@@ -78,9 +88,24 @@ const NumberOfApproachesScreen = () => {
           styles.center,
         ]}
       >
-        <ApproachButton func={() => changeApproach(0)} text={"1"} />
-        <ApproachButton func={() => changeApproach(1)} text={"2"} />
-        <ApproachButton func={() => changeApproach(2)} text={"3"} />
+        <ApproachButton
+          func={() => changeApproach(0)}
+          text={"1"}
+          done={!!(exerciseCompleted >= 1)}
+          longPress={onFocusButton}
+          focus={onFocusButton}
+          isFocused={askWindow}
+        />
+        <ApproachButton
+          func={() => changeApproach(1)}
+          text={"2"}
+          done={exerciseCompleted >= 2}
+        />
+        <ApproachButton
+          func={() => changeApproach(2)}
+          text={"3"}
+          done={exerciseCompleted === 3}
+        />
       </View>
       {/* <View style={[styles.exerciseName, styles.center]}> */}
       <Text style={{ textAlign: "center", paddingBottom: 25 }}>

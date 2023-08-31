@@ -1,23 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  // userId: null,
-  // nickname: null,
-  // isLogIn: null,
-  // email: null,
-  // photoURL: null,
+  exercises: {},
 };
 
 export const exercisesSlice = createSlice({
   name: "exercise",
   initialState,
   reducers: {
-    setApproach: (state, { payload }) => (
+    setNumberOfApproach: (state, { payload }) => (
       console.log(111),
-      console.log(payload),
+      console.log("payload", payload.exercise),
+      console.log("state", state),
       {
-        ...state,
-        // payload,
+        exercises: {
+          ...state.exercises,
+          [payload.exercise]: payload.quantity,
+        },
       }
     ),
     // updateUserProfile: (state, { payload }) => ({

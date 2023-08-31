@@ -1,5 +1,6 @@
 import { View, ImageBackground } from "react-native";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 import Button from "../components/Button";
 import Exercises from "../components/Exercises";
@@ -12,6 +13,8 @@ const TricepsChestScreen = () => {
   const [firstMuscle, setFirstMuscle] = useState(true);
   const [newExercise1, setNewExercise1] = useState(false);
   const [exercise1, setExercise1] = useState("");
+
+  // const ex = useSelector((state) => state.exercises.isLogIn);
 
   const [propsMuscle1, setPropsMuscle1] = useState([
     "Підйом гантелі за головою",

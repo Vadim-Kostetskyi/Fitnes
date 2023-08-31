@@ -11,7 +11,7 @@ const button = ({
   width,
   func,
 }) => {
-  console.log(navParams);
+  // console.log(navParams);
   const navigation = useNavigation();
 
   return (

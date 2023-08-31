@@ -54,7 +54,7 @@ const Exercises = ({
     <ScrollView style={{ marginTop: 20, paddingTop: 50, marginBottom: 50 }}>
       {exercises.map(
         (el, index) => (
-          console.log(el),
+          // console.log(el),
           (
             <View
               key={(el, index)}
