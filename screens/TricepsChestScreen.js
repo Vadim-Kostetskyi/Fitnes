@@ -14,7 +14,7 @@ const TricepsChestScreen = () => {
   const [newExercise1, setNewExercise1] = useState(false);
   const [exercise1, setExercise1] = useState("");
 
-  // const ex = useSelector((state) => state.exercises.isLogIn);
+  const memory = useSelector((state) => state.exercises);
 
   const [propsMuscle1, setPropsMuscle1] = useState([
     "Підйом гантелі за головою",
@@ -42,7 +42,7 @@ const TricepsChestScreen = () => {
   };
 
   const addExercise2 = () => {
-    setPropsMuscle2((prevProps) => [...prevProps, "Нове вправа"]);
+    setPropsMuscle2((prevProps) => [...prevProps, "Нова вправа"]);
   };
 
   const addNewExercise1 = () => {
@@ -69,6 +69,7 @@ const TricepsChestScreen = () => {
             cancelNewExercise={cancelNewExercise1}
             exercise={exercise1}
             setExercise={setExercise1}
+            memoryExercises={memory.exercises}
           />
         )}
         {!firstMuscle && (
