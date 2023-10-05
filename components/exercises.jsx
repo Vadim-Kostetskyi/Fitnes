@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 
-import Button from "./Button";
+import Button from "./button";
 import { styles } from "../styles";
 
 import Input from "./Input";
