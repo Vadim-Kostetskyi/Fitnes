@@ -55,7 +55,8 @@ const Exercises = ({
     <ScrollView style={{ marginTop: 20, paddingTop: 50, marginBottom: 50 }}>
       {exercises.map(
         (el, index) => (
-          console.log(memoryExercises[el]),
+          console.log(memoryExercises[el][1]),
+          console.log(111),
           (console.log(el),
           (
             <View
@@ -74,7 +75,9 @@ const Exercises = ({
                 ]}
               >
                 <Text style={[{ fontSize: 25, color: "#FFFFFF" }]}>
-                  {` ${memoryExercises[el].join("/")}\n 50кг`}
+                  {` ${memoryExercises[el][0].join("/")}\n ${memoryExercises[
+                    el
+                  ][1].join("/")}кг`}
                   {/* 50rf */}
                 </Text>
               </View>

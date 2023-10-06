@@ -4,7 +4,7 @@ import { exercisesSlice } from "./exercisesReduser";
 const { setNumberOfApproach } = exercisesSlice.actions;
 
 export const setNumberOfApproaches =
-  ({ exercise, quantity }) =>
+  ({ exercise, quantity, weight }) =>
   async (dispatch, getState) => {
     try {
       // const { user } = await createUserWithEmailAndPassword(
@@ -13,7 +13,7 @@ export const setNumberOfApproaches =
       //   password
       // );
 
-      dispatch(setNumberOfApproach({ exercise, quantity }));
+      dispatch(setNumberOfApproach({ exercise, quantity, weight }));
     } catch (error) {
       throw error;
     }

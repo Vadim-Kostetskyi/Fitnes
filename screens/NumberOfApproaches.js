@@ -15,13 +15,14 @@ const NumberOfApproachesScreen = () => {
   } = useRoute();
 
   const oldExercise = useSelector((state) => state.exercises.exercises);
-  console.log("ex", oldExercise[exercise]);
 
-  const [quantity, setQuantity] = useState(oldExercise[exercise] || [0, 0, 0]);
+  const [quantity, setQuantity] = useState(
+    oldExercise[exercise][0] || [0, 0, 0]
+  );
   const [exercisesCompleted, setExercisesCompleted] = useState(-1);
   const [exerciseCompleted, setExerciseCompleted] = useState(0);
-  const [weight, setWeight] = useState([0, 0, 0]);
-  const [askWindow, setAskWindow] = useState(false);
+  const [weight, setWeight] = useState(oldExercise[exercise][1] || [0, 0, 0]);
+  const [askWindow, setAskWindow] = useState([false, false, false]);
   const [approach, setApproach] = useState(0);
 
   useEffect(() => {
@@ -35,10 +36,8 @@ const NumberOfApproachesScreen = () => {
       setExerciseCompleted(3);
     }
     setExercisesCompleted(indexWithZero);
+    setApproach(indexWithZero !== -1 ? indexWithZero : 2);
   }, []);
-  console.log("exercisesCompleted", exerciseCompleted);
-
-  console.log("quantity", quantity);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -51,14 +50,14 @@ const NumberOfApproachesScreen = () => {
 
   const changeApproach = (number) => {
     setApproach(number);
+    setAskWindow(
+      (prev) => prev.map((value, index) => (index === number ? true : false))
+      // [false, false, false]
+    );
   };
 
   const memorize = async () => {
     try {
-      console.log(99);
-      console.log(exercise);
-      console.log(quantity);
-      console.log(weight);
       await dispatch(
         setNumberOfApproaches({
           exercise,
@@ -73,11 +72,6 @@ const NumberOfApproachesScreen = () => {
       console.log(22222);
       console.error(error);
     }
-  };
-
-  const onFocusButton = () => {
-    console.log(11111);
-    setAskWindow(true);
   };
 
   return (
@@ -98,19 +92,25 @@ const NumberOfApproachesScreen = () => {
           func={() => changeApproach(0)}
           text={"1"}
           done={!!(exerciseCompleted >= 1)}
-          longPress={onFocusButton}
-          focus={onFocusButton}
-          isFocused={askWindow}
+          longPress={() => changeApproach(0)}
+          // focus={onFocusButton}
+          isFocused={askWindow[0]}
         />
         <ApproachButton
           func={() => changeApproach(1)}
           text={"2"}
           done={exerciseCompleted >= 2}
+          longPress={() => changeApproach(1)}
+          // focus={onFocusButton}
+          isFocused={askWindow[1]}
         />
         <ApproachButton
           func={() => changeApproach(2)}
           text={"3"}
           done={exerciseCompleted === 3}
+          longPress={() => changeApproach(2)}
+          // focus={onFocusButton}
+          isFocused={askWindow[2]}
         />
       </View>
       {/* <View style={[styles.exerciseName, styles.center]}> */}

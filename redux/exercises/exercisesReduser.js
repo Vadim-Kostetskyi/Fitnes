@@ -10,7 +10,7 @@ export const exercisesSlice = createSlice({
   reducers: {
     setNumberOfApproach: (state, { payload }) => (
       console.log(111),
-      console.log("payload", payload.exercise),
+      console.log("payload", payload),
       console.log("state", state),
       console.log(112),
       console.log(payload.exercise),
@@ -21,7 +21,7 @@ export const exercisesSlice = createSlice({
       {
         exercises: {
           ...state.exercises,
-          [payload.exercise]: payload.quantity,
+          [payload.exercise]: [payload.quantity, payload.weight],
         },
       }
     ),
