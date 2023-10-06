@@ -20,6 +20,7 @@ const NumberOfApproachesScreen = () => {
   const [quantity, setQuantity] = useState(oldExercise[exercise] || [0, 0, 0]);
   const [exercisesCompleted, setExercisesCompleted] = useState(-1);
   const [exerciseCompleted, setExerciseCompleted] = useState(0);
+  const [weight, setWeight] = useState([0, 0, 0]);
   const [askWindow, setAskWindow] = useState(false);
   const [approach, setApproach] = useState(0);
 
@@ -42,8 +43,8 @@ const NumberOfApproachesScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const add = (number) => {
-    setQuantity((prev) =>
+  const add = (set, number) => {
+    set((prev) =>
       prev.map((value, index) => (index === approach ? value + number : value))
     );
   };
@@ -52,12 +53,17 @@ const NumberOfApproachesScreen = () => {
     setApproach(number);
   };
 
-  const numberOfApproach = async () => {
+  const memorize = async () => {
     try {
+      console.log(99);
+      console.log(exercise);
+      console.log(quantity);
+      console.log(weight);
       await dispatch(
         setNumberOfApproaches({
           exercise,
           quantity,
+          weight,
         })
       );
 
@@ -123,7 +129,7 @@ const NumberOfApproachesScreen = () => {
         ]}
       >
         <TouchableOpacity
-          onPress={() => add(-1)}
+          onPress={() => add(setQuantity, -1)}
           disabled={quantity[approach] === 0}
         >
           <AntDesign name="left" size={24} color="black" />
@@ -137,27 +143,69 @@ const NumberOfApproachesScreen = () => {
         >
           <Text style={{ textAlign: "center" }}> {quantity[approach]} </Text>
         </View>
-        <TouchableOpacity onPress={() => add(1)}>
+        <TouchableOpacity onPress={() => add(setQuantity, 1)}>
           <AntDesign name="right" size={24} color="black" />
         </TouchableOpacity>
       </View>
       <View style={{ flexDirection: "row", marginBottom: 15 }}>
         <ApproachButton
-          func={() => add(-10)}
+          func={() => add(setQuantity, -10)}
           text={"-10"}
           disable={quantity[approach] < 10}
         />
-        <ApproachButton func={() => add(10)} text={"+10"} />
+        <ApproachButton func={() => add(setQuantity, 10)} text={"+10"} />
       </View>
       <View style={{ flexDirection: "row", marginBottom: 15 }}>
         <ApproachButton
-          func={() => add(-50)}
+          func={() => add(setQuantity, -50)}
           text={"-50"}
           disable={quantity[approach] < 50}
         />
-        <ApproachButton func={() => add(50)} text={"+50"} />
+        <ApproachButton func={() => add(setQuantity, 50)} text={"+50"} />
       </View>
-      <TouchableOpacity style={[styles.center]} onPress={numberOfApproach}>
+
+      <Text style={{ textAlign: "center", paddingBottom: 25 }}>Вага</Text>
+
+      <View
+        style={[
+          {
+            flexDirection: "row",
+            width: 150,
+            marginBottom: 15,
+          },
+          styles.center,
+        ]}
+      >
+        <TouchableOpacity
+          onPress={() => add(setWeight, -10)}
+          disabled={weight[approach] < 10}
+        >
+          <AntDesign name="doubleleft" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => add(setWeight, -1)}
+          disabled={weight[approach] === 0}
+        >
+          <AntDesign name="left" size={24} color="black" />
+        </TouchableOpacity>
+        <View
+          style={[
+            styles.approach,
+            styles.center,
+            { position: "relative", top: -10 },
+          ]}
+        >
+          <Text style={{ textAlign: "center" }}> {weight[approach]} </Text>
+        </View>
+        <TouchableOpacity onPress={() => add(setWeight, 1)}>
+          <AntDesign name="right" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => add(setWeight, 10)}>
+          <AntDesign name="doubleright" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity style={[styles.center]} onPress={memorize}>
         <Ionicons name="checkmark-circle-outline" size={38} color="black" />
       </TouchableOpacity>
     </View>

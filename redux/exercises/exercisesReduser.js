@@ -12,6 +12,12 @@ export const exercisesSlice = createSlice({
       console.log(111),
       console.log("payload", payload.exercise),
       console.log("state", state),
+      console.log(112),
+      console.log(payload.exercise),
+      console.log(payload.quantity),
+      console.log(1),
+      console.log(state.exercises[payload.exercise]),
+      // console.log([payload.exercise]: payload.quantit),
       {
         exercises: {
           ...state.exercises,

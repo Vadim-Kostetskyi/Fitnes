@@ -73,9 +73,10 @@ const Exercises = ({
                   done && { backgroundColor: "#5CFB44", borderWidth: 0 },
                 ]}
               >
-                <Text
-                  style={[{ fontSize: 25, color: "#FFFFFF" }]}
-                >{` ${memoryExercises[el].join("/")}\n 50кг`}</Text>
+                <Text style={[{ fontSize: 25, color: "#FFFFFF" }]}>
+                  {` ${memoryExercises[el].join("/")}\n 50кг`}
+                  {/* 50rf */}
+                </Text>
               </View>
             </View>
           ))
