@@ -10,15 +10,16 @@ import {
   ImageBackground,
 } from "react-native";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import Input from "../components/Input";
-import { styles } from "./styles";
 import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import * as ImagePicker from "expo-image-picker";
+import Input from "../components/Input";
 import { registerDB } from "../redux/auth/authOperations";
 import { storage } from "../config";
 import { AntDesign } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { handleFocus, handleBlur } from "../helpers/focusing";
+import { styles } from "./styles";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -41,34 +42,12 @@ const RegisterScreen = () => {
     avatar,
   };
 
-  const handleFocusLogin = () => {
-    setLoginIsFocused(true);
-  };
-  const handleBlurLogin = () => {
-    setLoginIsFocused(false);
-  };
-
-  const handleFocusMail = () => {
-    setMailIsFocused(true);
-  };
-  const handleBlurMail = () => {
-    setMailIsFocused(false);
-  };
-
-  const handleFocusPassword = () => {
-    setPasswordIsFocused(true);
-  };
-  const handleBlurPassword = () => {
-    setPasswordIsFocused(false);
-  };
-
-  const handleFocus = (set) => {
-    set(true);
-  };
-
-  const handleBlur = (set) => {
-    set(false);
-  };
+  const handleFocusLogin = handleFocus(setLoginIsFocused);
+  const handleBlurLogin = handleBlur(setLoginIsFocused);
+  const handleFocusMail = handleFocus(setMailIsFocused);
+  const handleBlurMail = handleBlur(setMailIsFocused);
+  const handleFocusPassword = handleFocus(setPasswordIsFocused);
+  const handleBlurPassword = handleBlur(setPasswordIsFocused);
 
   const props = [
     {

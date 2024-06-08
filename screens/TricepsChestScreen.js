@@ -1,18 +1,34 @@
 import { View, ImageBackground } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import Button from "../components/button";
 import Exercises from "../components/exercises";
+import { handleFocus, handleBlur } from "../helpers/focusing";
+import { storeData, getData } from "../helpers/memory";
 import { styles } from "../styles";
 
 const TricepsChestScreen = () => {
-  const [backgroundImage, setBackgroundImage] = useState(
-    require("../assets/images/triceps.jpg")
-  );
+  const [backgroundImage, setBackgroundImage] = useState();
+  // require("../assets/images/triceps.jpg")
   const [firstMuscle, setFirstMuscle] = useState(true);
   const [newExercise1, setNewExercise1] = useState(false);
   const [exercise1, setExercise1] = useState("");
+
+  useEffect(() => {
+    // const loadBackgroundImage = async () => {
+    //   try {
+    //     const uri = await AsyncStorage.getItem("backgroundImage");
+    //     if (uri) {
+    //       setBackgroundImage(uri);
+    //     }
+    //   } catch (error) {
+    //     console.error("Failed to load background image", error);
+    //   }
+    // };
+    getData("backgroundImage");
+
+    // loadBackgroundImage();
+  }, []);
 
   const memory = useSelector((state) => state.exercises);
 
@@ -45,13 +61,8 @@ const TricepsChestScreen = () => {
     setPropsMuscle2((prevProps) => [...prevProps, "Нова вправа"]);
   };
 
-  const addNewExercise1 = () => {
-    setNewExercise1(true);
-  };
-
-  const cancelNewExercise1 = () => {
-    setNewExercise1(false);
-  };
+  const addNewExercise1 = handleFocus(setNewExercise1);
+  const cancelNewExercise1 = handleBlur(setNewExercise1);
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background}>

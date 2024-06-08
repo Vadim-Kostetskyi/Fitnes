@@ -5,7 +5,7 @@ const windowHeight = Dimensions.get("window").height;
 
 export const styles = StyleSheet.create({
   background: {
-    flex: 1,
+    // sta
     justifyContent: "flex-end",
   },
   container: {

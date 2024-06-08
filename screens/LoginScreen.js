@@ -8,43 +8,34 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
 } from "react-native";
-import { useFonts } from "expo-font";
+import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import Input from "../components/Input";
-import { styles } from "./styles";
 import { loginDB } from "../redux/auth/authOperations";
-import { useDispatch } from "react-redux";
+import { handleFocus, handleBlur } from "../helpers/focusing";
+import { styles } from "./styles";
 
 const LoginScreen = () => {
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
-
   const [mailIsFocused, setMailIsFocused] = useState(false);
   const [passwordIsFocused, setPasswordIsFocused] = useState(false);
   const [secureText, setSecureText] = useState(true);
-
   const [email, setMail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const state = {
     userEmail: email,
     password,
   };
 
-  const handleFocusMail = () => {
-    setMailIsFocused(true);
-  };
-  const handleBlurMail = () => {
-    setMailIsFocused(false);
-  };
-
-  const handleFocusPassword = () => {
-    setPasswordIsFocused(true);
-  };
-  const handleBlurPassword = () => {
-    setPasswordIsFocused(false);
-  };
+  const handleFocusMail = handleFocus(setMailIsFocused);
+  const handleBlurMail = handleBlur(setMailIsFocused);
+  const handleFocusPassword = handleFocus(setPasswordIsFocused);
+  const handleBlurPassword = handleBlur(setPasswordIsFocused);
 
   const props = [
     {
